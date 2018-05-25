@@ -75,34 +75,9 @@ class GlobalView extends AbstractView {
      }
 
     public function footer($runtime) {
-        $return = <<<HTML
-    <div id="push"></div>
-</div>
-<div id="footer">
-    <span id="copyright">&copy; 2017 RPI | An <a href="https://rcos.io" target="_blank">RCOS project</a></span>|
-    <span id="github">
-        <a href="https://github.com/Submitty/Submitty" target="blank" title="Fork us on Github">
-            <i class="fa fa-github fa-lg"></i>
-        </a>
-    </span>
-</div>
-HTML;
-        if ($this->core->userLoaded() && $this->core->getUser()->isDeveloper()) {
-            $return .= <<<HTML
-<div id='page-info'>
-    Total Queries: {$this->core->getCourseDB()->getQueryCount()}<br />
-    Runtime: {$runtime}<br />
-    Queries: <br /> {$this->core->getCourseDB()->getPrintQueries()}
-</div>
-HTML;
-        }
-        $return .= <<<HTML
-</body>
-</html>
-
-HTML;
-
-        return $return;
+        return $this->core->getOutput()->renderTwigTemplate("GlobalFooter.twig", [
+            "runtime" => $runtime
+        ]);
     }
 
     public function invalidPage($page) {
